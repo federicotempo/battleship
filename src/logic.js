@@ -73,6 +73,18 @@ class Player {
     this.type = type;
     this.gameboard = new Gameboard();
   }
+
+  receiveAttack(x, y) {
+    return this.gameboard.receiveAttack(x, y);
+  }
+
+  placeShip(ship, x, y, direction) {
+    if (this.gameboard.isValidPlacement(ship, x, y, direction)) {
+      this.gameboard.placeShip(ship, x, y, direction);
+      return true;
+    }
+    return false;
+  }
 }
 
 module.exports = { Ship, Gameboard, Player };

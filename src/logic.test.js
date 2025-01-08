@@ -80,7 +80,31 @@ describe("Unit tests for Gameboard class", () => {
 });
 
 describe("Unit tests for the Player class", () => {
-  it("", () => {
-    expect().toBe();
+  it("placeShip should return true if called from Player and the ship can be placed correctly", () => {
+    const player = new Player("Federico", "real");
+    const ship = new Ship("Carrier", 1);
+    expect(player.placeShip(ship, 0, 0, "horizontal")).toBe(true);
+  });
+
+  it("placeShip should return false if called from Player and the ship can't be placed correctly", () => {
+    const player = new Player("Federico", "real");
+    const ship1 = new Ship("Carrier", 1);
+    const ship2 = new Ship("Carrier", 1);
+    player.placeShip(ship1, 0, 0, "horizontal")
+    expect(player.placeShip(ship2, 0, 0, "horizontal")).toBe(false);
+  });
+
+  it("receiveAttack should work in the Player class if it is truly attacked", () => {
+    const player = new Player("Federico", "real");
+    const ship = new Ship("Carrier", 1);
+    player.placeShip(ship, 0, 0, "horizontal");
+    expect(player.receiveAttack(0, 0)).toBe(true);
+  });
+
+  it("receiveAttack should work in the Player class if the attack misses", () => {
+    const player = new Player("Federico", "real");
+    const ship = new Ship("Carrier", 1);
+    player.placeShip(ship, 0, 0, "horizontal");
+    expect(player.receiveAttack(0, 1)).toBe(false);
   });
 });
