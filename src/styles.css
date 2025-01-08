@@ -163,7 +163,7 @@ body {
 .grid-board {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  grid-gap: 2px;
+  grid-gap: 1px;
   margin-top: 10px;
 }
 
