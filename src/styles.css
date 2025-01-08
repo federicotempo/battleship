@@ -1,0 +1,200 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+body {
+  margin: 0;
+  font-family: "Courier New", Courier, monospace;
+  background-color: #001f3f;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url("https://p4.wallpaperbetter.com/wallpaper/340/757/197/world-of-warships-battlefield-naval-ocean-wallpaper-preview.jpg"); /* Placeholder for ocean image */
+  background-size: cover;
+  background-position: center;
+}
+
+.container {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  width: 90%;
+  max-width: 400px;
+  border: 2px solid #0074d9;
+}
+
+.game-container {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  width: 90%;
+  max-width: 800px;
+  border: 2px solid #0074d9;
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #0074d9;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.player-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #7fdbff;
+}
+
+.input {
+  padding: 12px;
+  font-size: 1rem;
+  border: 2px solid #7fdbff;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  outline: none;
+  background-color: #001f3f;
+  color: #ffffff;
+}
+
+.input::placeholder {
+  color: #7fdbff;
+}
+
+.start-button {
+  background-color: #0074d9;
+  color: #fff;
+  border: 2px solid #7fdbff;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.start-button:hover {
+  background-color: #005bb5;
+  transform: scale(1.05);
+}
+
+.displayer {
+  font-size: 1.5rem;
+  color: #7fdbff;
+  margin-bottom: 20px;
+}
+
+.grid-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.grid {
+  width: 48%;
+}
+
+.grid h2 {
+  color: #0074d9;
+}
+
+.grid-board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 2px;
+  margin-top: 10px;
+}
+
+.grid-cell {
+  width: 30px;
+  height: 30px;
+  background-color: #003b5c;
+  border: 1px solid #0074d9;
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .input,
+  .start-button {
+    font-size: 1rem;
+  }
+
+  .label {
+    font-size: 1.2rem;
+  }
+
+  .grid-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .grid {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
