@@ -1,4 +1,4 @@
-const { Ship, Gameboard, Player } = require("./logic");
+const { Ship, Gameboard, Player } = require("./classFactory");
 
 describe("Unit tests for Ship class", () => {
   it("hit should increase the number of 'hits' in the ship", () => {
