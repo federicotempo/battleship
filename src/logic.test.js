@@ -1,4 +1,4 @@
-const { Ship, Gameboard } = require("./logic");
+const { Ship, Gameboard, Player } = require("./logic");
 
 describe("Unit tests for the Ship class", () => {
   it("hit should increase the number of 'hits' in the ship", () => {
@@ -56,10 +56,10 @@ describe("Unit tests for Gameboard class", () => {
     const ship = new Ship("Carrier", 5);
     gameboard.placeShip(ship, 0, 0, "horizontal");
     gameboard.receiveAttack(0, 1);
-    expect(gameboard.missedAttacks.length).toBe(1);
+    expect(gameboard.missedAttacks).toContainEqual([0, 1]);
   });
 
-  it("allSunk should report if all the ships have been sunk", () => {
+  it("allSunk should report all ships as sunk", () => {
     const gameboard = new Gameboard();
     const ship1 = new Ship("Carrier1", 1);
     gameboard.placeShip(ship1, 0, 0, "horizontal");
@@ -70,11 +70,17 @@ describe("Unit tests for Gameboard class", () => {
     expect(gameboard.allSunk()).toBe(true);
   });
 
-  it("allSunk should return false if any of the ships have not been sunk", () => {
+  it("allSunk should return false if not all ships are sunk", () => {
     const gameboard = new Gameboard();
     const ship = new Ship("Carrier", 1);
     gameboard.placeShip(ship, 0, 0, "horizontal");
     gameboard.receiveAttack(1, 1);
     expect(gameboard.allSunk()).toBe(false);
+  });
+});
+
+describe("Unit tests for the Player class", () => {
+  it("", () => {
+    expect().toBe();
   });
 });

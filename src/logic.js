@@ -57,7 +57,7 @@ class Gameboard {
       this.board[y][x].hit();
       return true;
     } else {
-      this.missedAttacks.push((x, y));
+      this.missedAttacks.push([x, y]);
       return false;
     }
   }
@@ -67,4 +67,12 @@ class Gameboard {
   }
 }
 
-module.exports = { Ship, Gameboard };
+class Player {
+  constructor(name, type) {
+    this.name = name;
+    this.type = type;
+    this.gameboard = new Gameboard();
+  }
+}
+
+module.exports = { Ship, Gameboard, Player };
