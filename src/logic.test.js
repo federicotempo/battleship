@@ -1,6 +1,6 @@
 const { Ship, Gameboard, Player } = require("./logic");
 
-describe("Unit tests for the Ship class", () => {
+describe("Unit tests for Ship class", () => {
   it("hit should increase the number of 'hits' in the ship", () => {
     const ship = new Ship("Carrier", 1);
     ship.hit();
@@ -79,7 +79,7 @@ describe("Unit tests for Gameboard class", () => {
   });
 });
 
-describe("Unit tests for the Player class", () => {
+describe("Unit tests for Player class", () => {
   it("placeShip should return true if called from Player and the ship can be placed correctly", () => {
     const player = new Player("Federico", "real");
     const ship = new Ship("Carrier", 1);
@@ -90,7 +90,7 @@ describe("Unit tests for the Player class", () => {
     const player = new Player("Federico", "real");
     const ship1 = new Ship("Carrier", 1);
     const ship2 = new Ship("Carrier", 1);
-    player.placeShip(ship1, 0, 0, "horizontal")
+    player.placeShip(ship1, 0, 0, "horizontal");
     expect(player.placeShip(ship2, 0, 0, "horizontal")).toBe(false);
   });
 
