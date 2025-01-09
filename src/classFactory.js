@@ -30,7 +30,7 @@ class Gameboard {
         if (direction === "horizontal") {
           this.board[y][x + i] = ship;
         } else if (direction === "vertical") {
-          this.board[x][y + i] = ship;
+          this.board[y + i][x] = ship;
         }
       }
       this.ships.push(ship);
@@ -42,11 +42,11 @@ class Gameboard {
   isValidPlacement(ship, x, y, direction) {
     if (direction === "horizontal") {
       for (let i = 0; i < ship.length; i++) {
-        if (this.board[y][x + i] !== null) return false;
+        if (x + i >= this.size || this.board[y][x + i] !== null) return false;
       }
     } else if (direction === "vertical") {
       for (let i = 0; i < ship.length; i++) {
-        if (this.board[x][y + i] !== null) return false;
+        if (y + i >= this.size || this.board[y + i][x] !== null) return false;
       }
     }
     return true;
