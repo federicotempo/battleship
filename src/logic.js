@@ -10,10 +10,10 @@ import {
 
 function startGame() {
   const player = new Player("Federico", "real");
-  placeShips(player);
+  placeShipsOnGrid(player);
 }
 
-function placeShips(player) {
+function placeShipsOnGrid(player) {
   const ships = [
     new Ship("Destroyer", 2),
     new Ship("Submarine", 3),
