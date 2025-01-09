@@ -19,6 +19,9 @@ function createGrid(gridId) {
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 10; j++) {
       const gridCell = document.createElement("div");
+      if(gridId === "friendly-waters"){
+        gridCell.classList.add("grid-pointer");
+      }
       gridCell.classList.add("grid-cell");
       gridCell.dataset.x = j;
       gridCell.dataset.y = i;

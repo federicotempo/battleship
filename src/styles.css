@@ -182,6 +182,14 @@ body {
   background-color: rgba(0, 0, 255, 0.5);
 }
 
+.grid-pointer {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
 @media (max-width: 600px) {
   .title {
     font-size: 2.5rem;

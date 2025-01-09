@@ -82,10 +82,19 @@ function addDirectionButtonListeners(setDirection) {
   });
 }
 
+function hideButtons() {
+  const horizontalButton = document.querySelector("#horizontal-button");
+  const verticalButton = document.querySelector("#vertical-button");
+
+  horizontalButton.classList.add("hidden");
+  verticalButton.classList.add("hidden");
+}
+
 export {
   updateDisplayMessage,
   paintCells,
   highlightCells,
   addGridEventListeners,
   addDirectionButtonListeners,
+  hideButtons,
 };
