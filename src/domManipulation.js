@@ -104,6 +104,20 @@ function removeGridPointer(grid) {
   });
 }
 
+function addEnemyGridHoverEffect(grid) {
+  const cells = grid.querySelectorAll(".grid-cell");
+
+  cells.forEach((cell) => {
+    cell.addEventListener("mouseover", () => {
+      cell.classList.add("grid-cell-hover");
+    });
+
+    cell.addEventListener("mouseout", () => {
+      cell.classList.remove("grid-cell-hover");
+    });
+  });
+}
+
 export {
   updateDisplayMessage,
   paintCells,
@@ -113,4 +127,5 @@ export {
   hideButtons,
   changeGridPointer,
   removeGridPointer,
+  addEnemyGridHoverEffect,
 };

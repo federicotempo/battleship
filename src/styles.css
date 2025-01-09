@@ -186,6 +186,10 @@ body {
   cursor: pointer;
 }
 
+.grid-cell-hover {
+  background-color: grey;
+}
+
 .hidden {
   display: none;
 }
