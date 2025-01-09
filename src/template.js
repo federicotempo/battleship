@@ -1,15 +1,19 @@
+import { updateDisplayMessage } from "./domManipulation";
+
 function displayDOM() {
   const playerName = document.getElementById("player-name").value;
 
   if (playerName.trim() !== "") {
     // Ocultar la pantalla inicial
-    document.getElementById("initial-container").style.display = "none";
+    document.querySelector("#initial-container").style.display = "none";
 
     // Mostrar la nueva pantalla
-    document.getElementById("game-container").style.display = "block";
+    document.querySelector("#game-container").style.display = "block";
 
     // Mostrar el nombre del jugador en el displayer
-    document.getElementById("displayer").textContent = `${playerName}, place your carrier`;
+    document.querySelector(
+      "#displayer"
+    ).textContent = `${playerName}, place your carrier`;
 
     // Crear las grillas 10x10
     createGrid("friendly-waters");
@@ -20,10 +24,14 @@ function displayDOM() {
 // Función para crear las grillas 10x10
 function createGrid(gridId) {
   const gridElement = document.getElementById(gridId);
-  for (let i = 0; i < 100; i++) {
-    const gridCell = document.createElement("div");
-    gridCell.classList.add("grid-cell");
-    gridElement.appendChild(gridCell);
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      const gridCell = document.createElement("div");
+      gridCell.classList.add("grid-cell");
+      gridCell.dataset.x = j;
+      gridCell.dataset.y = i;
+      gridElement.appendChild(gridCell);
+    }
   }
 }
 
@@ -42,8 +50,8 @@ const handleEnterButton = () => {
 };
 
 const focusName = () => {
-   document.getElementById("player-name").focus();
-}
+  document.getElementById("player-name").focus();
+};
 
 const initializeDOM = () => {
   handleEnterButton();
