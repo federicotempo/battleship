@@ -2,14 +2,12 @@ import { Ship, Player } from "./classFactory";
 import {
   updateDisplayMessage,
   paintCells,
-  handleHorizontalButton,
-  handleVerticalButton,
-  handleMouseOver,
-  handleMouseOut,
+  addGridEventListeners,
+  addDirectionButtonListeners,
 } from "./domManipulation";
 
-function startGame() {
-  const player = new Player("Federico", "real");
+function startGame(playerName) {
+  const player = new Player(playerName, "real");
   placeShipsOnGrid(player);
 }
 
@@ -26,8 +24,12 @@ function placeShipsOnGrid(player) {
 
   const grid = document.getElementById("friendly-waters");
 
-  handleMouseOver(grid, currentShipIndex, ships, direction);
-  handleMouseOut(grid, currentShipIndex, ships, direction);
+  addGridEventListeners(
+    grid,
+    ships,
+    () => currentShipIndex,
+    () => direction
+  );
 
   grid.addEventListener("click", (event) => {
     if (
@@ -54,8 +56,9 @@ function placeShipsOnGrid(player) {
     }
   });
 
-  handleHorizontalButton();
-  handleVerticalButton();
+  addDirectionButtonListeners((newDirection) => {
+    direction = newDirection;
+  });
 
   updateDisplayMessage(
     `${player.name}, place your ${ships[currentShipIndex].name}`

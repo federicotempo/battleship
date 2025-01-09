@@ -1,3 +1,5 @@
+import { startGame } from "./logic";
+
 function displayDOM() {
   const playerName = document.getElementById("player-name").value;
 
@@ -6,13 +8,10 @@ function displayDOM() {
 
     document.querySelector("#game-container").style.display = "block";
 
-    document.querySelector(
-      "#displayer"
-    ).textContent = `${playerName}, place your carrier`;
-
     createGrid("friendly-waters");
     createGrid("enemy-waters");
   }
+  startGame(playerName);
 }
 
 function createGrid(gridId) {
@@ -46,10 +45,10 @@ const focusName = () => {
   document.getElementById("player-name").focus();
 };
 
-const initializeDOM = () => {
+const initialize = () => {
   handleEnterButton();
   handleStartButton();
   focusName();
 };
 
-export { initializeDOM };
+export { initialize };

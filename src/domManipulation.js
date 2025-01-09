@@ -37,53 +37,48 @@ function highlightCells(x, y, length, direction, action) {
   }
 }
 
-function handleHorizontalButton() {
-  document.getElementById("horizontal-button").addEventListener("click", () => {
-    direction = "horizontal";
-  });
-}
-
-function handleVerticalButton() {
-  document.getElementById("vertical-button").addEventListener("click", () => {
-    direction = "vertical";
-  });
-}
-
-function handleMouseOver(grid, currentShipIndex, ships, direction) {
+function addGridEventListeners(grid, ships, getCurrentShipIndex, getDirection) {
   grid.addEventListener("mouseover", (event) => {
     if (
       event.target.classList.contains("grid-cell") &&
-      currentShipIndex < ships.length
+      getCurrentShipIndex() < ships.length
     ) {
       const x = parseInt(event.target.dataset.x);
       const y = parseInt(event.target.dataset.y);
       highlightCells(
         x,
         y,
-        ships[currentShipIndex].length,
-        direction,
+        ships[getCurrentShipIndex()].length,
+        getDirection(),
         "highlight"
       );
     }
   });
-}
 
-function handleMouseOut(grid, currentShipIndex, ships, direction) {
   grid.addEventListener("mouseout", (event) => {
     if (
       event.target.classList.contains("grid-cell") &&
-      currentShipIndex < ships.length
+      getCurrentShipIndex() < ships.length
     ) {
       const x = parseInt(event.target.dataset.x);
       const y = parseInt(event.target.dataset.y);
       highlightCells(
         x,
         y,
-        ships[currentShipIndex].length,
-        direction,
+        ships[getCurrentShipIndex()].length,
+        getDirection(),
         "remove-highlight"
       );
     }
+  });
+}
+
+function addDirectionButtonListeners(setDirection) {
+  document.getElementById("horizontal-button").addEventListener("click", () => {
+    setDirection("horizontal");
+  });
+  document.getElementById("vertical-button").addEventListener("click", () => {
+    setDirection("vertical");
   });
 }
 
@@ -91,8 +86,6 @@ export {
   updateDisplayMessage,
   paintCells,
   highlightCells,
-  handleHorizontalButton,
-  handleVerticalButton,
-  handleMouseOver,
-  handleMouseOut,
+  addGridEventListeners,
+  addDirectionButtonListeners,
 };
