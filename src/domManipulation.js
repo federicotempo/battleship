@@ -90,6 +90,20 @@ function hideButtons() {
   verticalButton.classList.add("hidden");
 }
 
+function changeGridPointer(grid) {
+  const cells = grid.querySelectorAll(".grid-cell");
+  cells.forEach((cell) => {
+    cell.classList.add("grid-pointer");
+  });
+}
+
+function removeGridPointer(grid) {
+  const cells = grid.querySelectorAll(".grid-cell");
+  cells.forEach((cell) => {
+    cell.classList.remove("grid-pointer");
+  });
+}
+
 export {
   updateDisplayMessage,
   paintCells,
@@ -97,4 +111,6 @@ export {
   addGridEventListeners,
   addDirectionButtonListeners,
   hideButtons,
+  changeGridPointer,
+  removeGridPointer,
 };
