@@ -4,14 +4,23 @@ import {
   paintCells,
   addGridEventListeners,
   addDirectionButtonListeners,
+  hideButtons,
+  changeGridPointer,
+  removeGridPointer,
+  addEnemyGridHoverEffect,
 } from "./domManipulation";
 
 function startGame(playerName) {
   const player = new Player(playerName, "real");
-  placeShipsOnGrid(player);
+  const computer = new Player("Computer", "computer");
+
+  placeComputerShips(computer);
+  placeShipsOnGrid(player, () => {
+    playGame(player, computer);
+  });
 }
 
-function placeShipsOnGrid(player) {
+function placeShipsOnGrid(player, onAllShipsPlaced) {
   const ships = [
     new Ship("Destroyer", 2),
     new Ship("Submarine", 3),
@@ -31,6 +40,10 @@ function placeShipsOnGrid(player) {
     () => direction
   );
 
+  addDirectionButtonListeners((newDirection) => {
+    direction = newDirection;
+  });
+
   grid.addEventListener("click", (event) => {
     if (
       event.target.classList.contains("grid-cell") &&
@@ -49,6 +62,9 @@ function placeShipsOnGrid(player) {
           );
         } else {
           updateDisplayMessage("All ships placed!");
+          hideButtons();
+          onAllShipsPlaced();
+          removeGridPointer(grid);
         }
       } else {
         updateDisplayMessage("Invalid placement, try again.");
@@ -56,70 +72,90 @@ function placeShipsOnGrid(player) {
     }
   });
 
-  addDirectionButtonListeners((newDirection) => {
-    direction = newDirection;
-  });
-
   updateDisplayMessage(
     `${player.name}, place your ${ships[currentShipIndex].name}`
   );
 }
 
-// ships.forEach((ship) => {
-//   let placed = false;
-//   while (!placed) {
-//     const x =
-//       player.type === "real"
-//         ? parseInt(prompt(`Enter x for ${ship.name}: `))
-//         : Math.floor(Math.random() * 10);
-//     const y =
-//       player.type === "real"
-//         ? parseInt(prompt(`Enter y for ${ship.name}: `))
-//         : Math.floor(Math.random() * 10);
-//     const direction =
-//       player.type === "real"
-//         ? prompt("Enter direction (horizontal/vertical): ")
-//         : Math.random() > 0.5
-//         ? "horizontal"
-//         : "vertical";
-//     placed = player.placeShip(ship, x, y, direction);
-//     if (!placed && player.type === "real") {
-//       console.log("Invalid placement, try again.");
-//     }
-//   }
-//   if (player.type === "real") console.log(`${ship.name} placed!`);
-// });
+function placeComputerShips(computer) {
+  const ships = [
+    new Ship("Destroyer", 2),
+    new Ship("Submarine", 3),
+    new Ship("Battleship", 4),
+    new Ship("Carrier", 5),
+  ];
 
-// function attack(opponenet, x, y) {
-//   const hit = opponenet.receiveAttack(x, y);
-//   return hit ? "It's a hit!" : "Miss!";
-// }
+  ships.forEach((ship) => {
+    let placed = false;
+    while (!placed) {
+      const x = Math.floor(Math.random() * 10);
+      const y = Math.floor(Math.random() * 10);
+      const direction = Math.random() > 0.5 ? "horizontal" : "vertical";
+      placed = computer.placeShip(ship, x, y, direction);
+    }
+  });
+}
 
-// let gameOver = false;
+function attack(opponent, x, y) {
+  return opponent.receiveAttack(x, y);
+}
 
-// while (!gameOver) {
-//   console.log("Your turn!");
-//   const x = parseInt(prompt("Enter x coordinate: "));
-//   const y = parseInt(prompt("Enter y coordinate: "));
-//   console.log(attack(computer, x, y));
+function playGame(player, computer) {
+  const grid = document.querySelector("#enemy-waters");
+  changeGridPointer(grid);
+  addEnemyGridHoverEffect(grid);
 
-//   if (computer.gameboard.allSunk()) {
-//     console.log("You won!");
-//     gameOver = true;
-//     break;
-//   }
+  updateDisplayMessage("It's your turn to attack!");
 
-//   console.log("Computer's turn!");
-//   const computerX = Math.floor(Math.random() * 10);
-//   const computerY = Math.floor(Math.random() * 10);
-//   console.log(`Computer attacks (${computerX}, ${computerY})`);
-//   console.log(attack(player, computerX, computerY));
+  function handleRound(event) {
+    if (event.target.classList.contains("grid-cell")) {
+      const x = parseInt(event.target.dataset.x);
+      const y = parseInt(event.target.dataset.y);
+      const hit = attack(computer, x, y);
 
-//   if (player.gameboard.allSunk()) {
-//     console.log("Computer won!");
-//     gameOver = true;
-//     break;
-//   }
-// }
+      if (hit) {
+        event.target.style.backgroundColor = "red";
+      } else {
+        event.target.style.backgroundColor = "white";
+      }
 
+      if (computer.gameboard.allSunk()) {
+        updateDisplayMessage("You win!");
+        grid.removeEventListener("click", handleRound);
+        return;
+      }
+
+      updateDisplayMessage("Computer's turn to attack!");
+
+      setTimeout(() => {
+        const computerX = Math.floor(Math.random() * 10);
+        const computerY = Math.floor(Math.random() * 10);
+        const computerHit = attack(player, computerX, computerY);
+
+        const playerGrid = document.querySelector(
+          `#friendly-waters .grid-cell[data-x="${computerX}"][data-y="${computerY}"]`
+        );
+        if (computerHit) {
+          if (playerGrid) {
+            playerGrid.style.backgroundColor = "red";
+          }
+        } else {
+          if (playerGrid) {
+            playerGrid.style.backgroundColor = "white";
+          }
+        }
+
+        if (player.gameboard.allSunk()) {
+          updateDisplayMessage("Computer wins!");
+          grid.removeEventListener("click", handleRound);
+          return;
+        }
+
+        updateDisplayMessage("It's your turn to attack!");
+      }, 1000);
+    }
+  }
+
+  grid.addEventListener("click", handleRound);
+}
 export { startGame };
