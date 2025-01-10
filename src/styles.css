@@ -194,6 +194,11 @@ body {
   display: none;
 }
 
+.grid-cell.attacked {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 @media (max-width: 600px) {
   .title {
     font-size: 2.5rem;

@@ -16,7 +16,7 @@ function startGame(playerName) {
 
   placeComputerShips(computer);
   placeShipsOnGrid(player, () => {
-    playGame(player, computer);
+    playGame(player, computer, playerName);
   });
 }
 
@@ -100,7 +100,7 @@ function attack(opponent, x, y) {
   return opponent.receiveAttack(x, y);
 }
 
-function playGame(player, computer) {
+function playGame(player, computer, playerName) {
   const grid = document.querySelector("#enemy-waters");
   changeGridPointer(grid);
   addEnemyGridHoverEffect(grid);
@@ -109,9 +109,19 @@ function playGame(player, computer) {
 
   function handleRound(event) {
     if (event.target.classList.contains("grid-cell")) {
+      if (event.target.classList.contains("attacked")) {
+        updateDisplayMessage(
+          "You've already attacked this cell! Choose another one"
+        );
+        return;
+      }
+
       const x = parseInt(event.target.dataset.x);
       const y = parseInt(event.target.dataset.y);
+
       const hit = attack(computer, x, y);
+
+      event.target.classList.add("attacked");
 
       if (hit) {
         event.target.style.backgroundColor = "red";
@@ -128,13 +138,16 @@ function playGame(player, computer) {
       updateDisplayMessage("Computer's turn to attack!");
 
       setTimeout(() => {
-        const computerX = Math.floor(Math.random() * 10);
-        const computerY = Math.floor(Math.random() * 10);
-        const computerHit = attack(player, computerX, computerY);
+        const {
+          hit: computerHit,
+          attackX: computerX,
+          attackY: computerY,
+        } = computer.makeAttack(player);
 
         const playerGrid = document.querySelector(
           `#friendly-waters .grid-cell[data-x="${computerX}"][data-y="${computerY}"]`
         );
+
         if (computerHit) {
           if (playerGrid) {
             playerGrid.style.backgroundColor = "red";
@@ -158,4 +171,5 @@ function playGame(player, computer) {
 
   grid.addEventListener("click", handleRound);
 }
+
 export { startGame };

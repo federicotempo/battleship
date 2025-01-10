@@ -1,3 +1,4 @@
 import "./styles.css";
+import { initialize } from "./template";
 
-console.log("hi")
+initialize();
