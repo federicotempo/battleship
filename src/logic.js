@@ -130,8 +130,9 @@ function playGame(player, computer, playerName) {
       }
 
       if (computer.gameboard.allSunk()) {
-        updateDisplayMessage("You win!");
+        updateDisplayMessage("You win! The game will restart in 5 seconds");
         grid.removeEventListener("click", handleRound);
+        restartGame();
         return;
       }
 
@@ -159,8 +160,11 @@ function playGame(player, computer, playerName) {
         }
 
         if (player.gameboard.allSunk()) {
-          updateDisplayMessage("Computer wins!");
+          updateDisplayMessage(
+            "Computer wins! The game will restart in 5 seconds"
+          );
           grid.removeEventListener("click", handleRound);
+          restartGame();
           return;
         }
 
@@ -170,6 +174,12 @@ function playGame(player, computer, playerName) {
   }
 
   grid.addEventListener("click", handleRound);
+}
+
+function restartGame() {
+  setTimeout(() => {
+    location.reload();
+  }, 5000);
 }
 
 export { startGame };
